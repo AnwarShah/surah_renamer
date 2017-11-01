@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-
 require 'yaml'
 require 'optparse'
 
@@ -34,7 +33,8 @@ if options[:directory].nil?
 end
 
 ##################### File rename ###############
-SURAH_DB = File.open("surah_names.yml") { |file| YAML.load(file) }
+script_dir = File.dirname File.realpath(__FILE__)
+SURAH_DB = File.open(script_dir + "/surah_names.yml") { |file| YAML.load(file) }
 
 directory = options[:directory] + (options[:directory][-1] == "/" ? '' : "/")
 dotted_ext = "." + options[:extension]
