@@ -20,6 +20,10 @@ OptionParser.new do |opts|
     "rename file with extension ext, without dot") do |ext|
     options[:extension] = ext
   end
+
+  opts.on("-s", "--suffix string", "a suffix string to add after filename") do |suf|
+    options[:suffix] = suf
+  end
 end.parse!
 
 # extension is required
@@ -41,7 +45,8 @@ dotted_ext = "." + options[:extension]
 
 Dir.glob(directory + "*" + dotted_ext) do |filename|
   s_number = filename.match(/[0-9]{1,3}/)[0]
-  new_name = directory + s_number + "." + SURAH_DB[s_number.to_i] + dotted_ext
+  suffix = options[:suffix].nil? ? '' : '-' + options[:suffix]
+  new_name = directory + s_number + "." + SURAH_DB[s_number.to_i] + suffix + dotted_ext
 
   begin
     if File.rename(filename, new_name).zero? # means success
